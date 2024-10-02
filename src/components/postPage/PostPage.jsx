@@ -49,7 +49,7 @@ const PostPage = () => {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                   }
-            });
+            })
           } catch (err) {
             console.error(err);
           }
