@@ -8,6 +8,9 @@ const Header = () => {
     const handlePost = () => {
         navigate("/form")
     }
+    const handleMain = () => {
+        navigate("/")
+    }
     return(
         <header>
             <div>
@@ -15,6 +18,9 @@ const Header = () => {
             </div>
             <div>
                 {localStorage.getItem("token") && <button onClick={handlePost}>Add Posting</button>}
+            </div>
+            <div>
+                {localStorage.getItem("token") && <button onClick={handleMain}>Home</button>}
             </div>
             
         </header>

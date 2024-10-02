@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import Posts from "./Posts";
 const Main = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -9,7 +10,7 @@ const Main = () => {
     }, [navigate])
 
     return(
-        <h2>Skelbimai</h2>
+        <Posts/>
     )
 }
 
