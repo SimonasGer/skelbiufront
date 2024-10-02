@@ -59,7 +59,7 @@ const PostPage = () => {
             <h2>{post.title}</h2>
             <img src={post.image} alt={post.image} />
             <article>{post.description}</article>
-            <p>{post._id}</p>
+            <p>{post.username}</p>
             <button>{post.price} eur</button>
             <form onSubmit={handleSubmit}>
                 <fieldset>

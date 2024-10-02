@@ -8,7 +8,6 @@ const Comment = (props) => {
     const [comment, setComment] = useState({})
     const [reply, setReply] = useState(false)
     const [expand, setExpand] = useState("Reply")
-
     useEffect(() => {
         const loadComment = async () => {
             try {
@@ -26,7 +25,7 @@ const Comment = (props) => {
             loadComment()
             setLoading(false)
         }
-    }, [loading, props._id])
+    }, [loading, props._id, comment])
 
     const handleReply = () => {
         if(reply){
@@ -86,6 +85,9 @@ const Comment = (props) => {
     }, [loading2, props._id])
     return(
         <article>
+            <a href={`/user/${comment.creator ? comment.creator._id : ''}`}>
+                {comment.creator ? comment.creator.username : 'Unknown User'}
+            </a>
             <h2>{comment.content}</h2>
             {reply && 
                 <form onSubmit={handleSubmit}>
