@@ -2,6 +2,9 @@ import { useLocation } from "react-router-dom"
 import { url } from "../../utilities/backend"
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { jwtDecode } from "jwt-decode"
+import Comments from "./Comments"
+
 const PostPage = () => {
     const postId = useLocation().pathname.split("/")[2]
 
@@ -26,15 +29,50 @@ const PostPage = () => {
         }
     }, [loading, postId])
 
+    const [comment, setComment] = useState({
+        content: "",
+        creator: jwtDecode(localStorage.getItem("token")).id,
+        post: postId
+    })
+
+    const handleChange = (e)=>{
+        setComment({
+            ...comment,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(`${url}/comments`, comment,  {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                  }
+            });
+          } catch (err) {
+            console.error(err);
+          }
+    }
     return(
         <section>
             <h2>{post.title}</h2>
             <img src={post.image} alt={post.image} />
             <article>{post.description}</article>
             <p>{post._id}</p>
-            <button>{post.price}</button>
+            <button>{post.price} eur</button>
+            <form onSubmit={handleSubmit}>
+                <fieldset>
+                    <div>
+                        <textarea name="content" id="content" placeholder="Comment" value={comment.content} onChange={handleChange}></textarea>
+                    </div>
+                    <div>
+                        <button type="submit">Post Comment</button>
+                    </div>
+                    </fieldset>
+            </form>
             <article>
-
+                {post.comments && <Comments comments={post.comments}/>}
             </article>
         </section>
     )
