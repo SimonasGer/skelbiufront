@@ -20,10 +20,9 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(user);
         try {
             const res = await axios.post(`${url}/users/register`, user);
-            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('token', res.data.data.token);
             navigate('/');
           } catch (err) {
             console.error(err);
@@ -45,7 +44,7 @@ const Register = () => {
                     <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" value={user.confirmPassword} onChange={handleChange}/>
                 </div>
                 <div>
-                    <button>Log In</button>
+                    <button type="submit">Log In</button>
                 </div>
                 <div>
                     <a href="/login">Have an account?</a>

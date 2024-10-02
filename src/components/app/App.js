@@ -3,6 +3,7 @@ import Header from "../header/Header";
 import Login from "../login/Login";
 import Register from "../register/Register";
 import Main from "../main/Main";
+import Form from "../form/Form";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/" element={<Main/>}></Route>
+          <Route path="/form" element={<Form/>}></Route>
         </Routes>
       </Router>
     </div>

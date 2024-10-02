@@ -19,10 +19,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(user);
         try {
             const res = await axios.post(`${url}/users/login`, user);
-            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('token', res.data.data.token);
             navigate('/');
           } catch (err) {
             console.error(err);
@@ -38,7 +37,7 @@ const Login = () => {
                     <input type="password" name="password" id="password" placeholder="Password" value={user.password} onChange={handleChange}/>
                 </div>
                 <div>
-                    <button>Log In</button>
+                    <button type="submit">Log In</button>
                 </div>
                 <div>
                     <a href="/register">Don't have an account?</a>
