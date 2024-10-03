@@ -7,18 +7,31 @@ import Comments from "./Comments"
 
 const PostPage = () => {
     const postId = useLocation().pathname.split("/")[2]
-
+    const user = jwtDecode(localStorage.getItem("token")).id
     const [loading, setLoading] = useState(true)
     const [post, setPost] = useState({})
+    const [likes, setLikes] = useState(0)
+    const [like, setLike] = useState("black")
+
+
     useEffect(() => {
         const loadPost = async () => {
             try {
-                const res = await axios.get(`${url}/posts/${postId}`, {
+                await axios.get(`${url}/posts/${postId}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                       }
-                });
-                setPost(res.data.data.post)
+                }).then((res) => {
+                    setPost(res.data.data.post)
+                    setLikes(res.data.data.post.likes.length)
+                    let users = res.data.data.post.likes
+                    for (let i of users) {
+                        if (user === i._id){
+                            setLike("green")
+                            break
+                        }
+                    }
+                })
             } catch (err) {
                 console.error(err);
             }
@@ -27,7 +40,7 @@ const PostPage = () => {
             loadPost()
             setLoading(false)
         }
-    }, [loading, postId])
+    }, [loading, postId, user])
 
     const [comment, setComment] = useState({
         content: "",
@@ -54,13 +67,41 @@ const PostPage = () => {
             console.error(err);
           }
     }
+
+    const handleLike = async () => {
+        if (like === "black"){
+            setLike("green")
+        } else {
+            setLike("black")
+        }
+        try {
+            await axios.post(`${url}/posts/${postId}`, {likes: user} ,{
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                  }
+            }).then((res) => {
+                setLikes(res.data.data.post.likes.length)
+            })            
+        } catch (error) {
+            console.error(error)
+        }
+      }
+
     return(
         <section>
             <h2>{post.title}</h2>
-            <img src={post.image} alt={post.image} />
+            <div>
+                <a href={`/user/${post.creator ? post.creator._id : ''}`}>
+                    {post.creator ? post.creator.username : 'Unknown User'}
+                </a>
+            </div>
+            
+            <img src={post.image} alt={post.image}/>
             <article>{post.description}</article>
-            <p>{post.username}</p>
             <button>{post.price} eur</button>
+            <div>
+                <span onClick={handleLike} style={{ color: like}}>&#x2764;</span> {likes}
+            </div>
             <form onSubmit={handleSubmit}>
                 <fieldset>
                     <div>
