@@ -23,6 +23,7 @@ const Login = () => {
             const res = await axios.post(`${url}/users/login`, user);
             localStorage.setItem('token', res.data.data.token);
             localStorage.setItem('username', res.data.data.username )
+            localStorage.setItem('username', res.data.data.role )
             navigate('/');
           } catch (err) {
             console.error(err);

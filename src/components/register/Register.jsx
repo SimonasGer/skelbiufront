@@ -24,6 +24,8 @@ const Register = () => {
             const res = await axios.post(`${url}/users/register`, user);
             console.log(res)
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('username', res.data.username);
+            localStorage.setItem('role', res.data.role);
             navigate('/');
           } catch (err) {
             console.error(err);

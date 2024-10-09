@@ -63,6 +63,8 @@ const PostPage = () => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                   }
             })
+        setLoading(true)
+        comment.content = ""
           } catch (err) {
             console.error(err);
           }
@@ -102,7 +104,7 @@ const PostPage = () => {
             </div>
             <button className="btn btn-primary mb-3">{post.price} eur</button>
             <div>
-                <span onClick={handleLike} style={{ color: like}}>&#x2764;</span> {likes}
+                <span onClick={handleLike} style={{ color: like, fontSize: "40pt"}}>♥</span> {likes}
             </div>
             <form onSubmit={handleSubmit}>
                 <fieldset className="d-flex flex-column align-items-center">
@@ -116,7 +118,7 @@ const PostPage = () => {
                 </fieldset>
             </form>
             <article className="w-100">
-                {post.comments && <Comments comments={post.comments}/>}
+                {post.comments && <Comments comments={post.comments} loading={setLoading}/>}
             </article>
         </section>
     )

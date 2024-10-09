@@ -5,9 +5,9 @@ const Comments = (props) => {
     return(
         <div className="w-100 my-5">
             <h2 className="text-center">Comments</h2>
-            <div className="d-flex justify-content-around flex-wrap">
+            <div className="w-100">
                 {comments.map(comment => (
-                    <Comment _id={comment}/>
+                    <Comment _id={comment} loading={props.loading}/>
                 ))}
             </div>
         </div>

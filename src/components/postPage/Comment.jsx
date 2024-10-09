@@ -49,6 +49,8 @@ const Comment = (props) => {
             [e.target.name]: e.target.value
         })
     }
+    const [loading2, setLoading2] = useState(true)
+    const [replies, setReplies] = useState([])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -58,13 +60,13 @@ const Comment = (props) => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                   }
             })
+            setLoading(true)
+            setLoading2(true)
+            response.content = ""
           } catch (err) {
             console.error(err);
           }
     }
-
-    const [loading2, setLoading2] = useState(true)
-    const [replies, setReplies] = useState([])
     useEffect(() => {
         const loadPost = async () => {
             try {
@@ -83,8 +85,26 @@ const Comment = (props) => {
             setLoading2(false)
         }
     }, [loading2, props._id])
+
+    const handleDelete = async () => {
+        try {
+            await axios.post(`${url}/comments/delete/${props._id}`, comment, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                  }
+            })
+            props.loading(true)
+            setLoading(true)
+          } catch (err) {
+            console.error(err);
+          }
+    }
+
     return(
-        <article className="border overflow-auto m-2"  style={{height: 125, width: "100%", }}>
+        <article className={`border p-5`}  style={{ width: "100%", }}>
+            <div onClick={handleDelete} className="float-end">
+                🗑
+            </div>
             <a href={`/user/${comment.creator ? comment.creator._id : ''}`}>
                 {comment.creator ? comment.creator.username : 'Unknown User'}
             </a>
@@ -102,7 +122,7 @@ const Comment = (props) => {
                 </form>}
             <button className="btn btn-success" onClick={handleReply}>{expand}</button>
             {replies.map(reply => (
-                <Comment _id={reply}/>
+                <Comment _id={reply} loading={setLoading2}/>
             ))}
         </article>
     )
