@@ -88,31 +88,34 @@ const PostPage = () => {
       }
 
     return(
-        <section>
-            <h2>{post.title}</h2>
-            <div>
-                <a href={`/user/${post.creator ? post.creator._id : ''}`}>
+        <section className="container d-flex flex-column align-items-center w-100">
+            <h2 className="fs-1 mt-4">{post.title}</h2>
+            <div className="mb-5">
+                <p className="d-inline fs-4">Created by:</p>
+                <a className="d-inline fs-4" href={`/user/${post.creator ? post.creator._id : ''}`}>
                     {post.creator ? post.creator.username : 'Unknown User'}
                 </a>
             </div>
-            
-            <img src={post.image} alt={post.image}/>
-            <article>{post.description}</article>
-            <button>{post.price} eur</button>
+            <div className="w-75 text-center">
+                <img className="w-100" src={post.image} alt={post.image}/>
+                <div className="w-100 my-5 fs-2" style={{height: "auto"}}>{post.description}</div>
+            </div>
+            <button className="btn btn-primary mb-3">{post.price} eur</button>
             <div>
                 <span onClick={handleLike} style={{ color: like}}>&#x2764;</span> {likes}
             </div>
             <form onSubmit={handleSubmit}>
-                <fieldset>
-                    <div>
-                        <textarea name="content" id="content" placeholder="Comment" value={comment.content} onChange={handleChange}></textarea>
+                <fieldset className="d-flex flex-column align-items-center">
+                    <div className="my-3">
+                        <textarea style={{height: 150, width: 400}}
+                         name="content" id="content" placeholder="Comment" value={comment.content} onChange={handleChange}></textarea>
                     </div>
                     <div>
-                        <button type="submit">Post Comment</button>
+                        <button className="btn btn-primary" type="submit">Post Comment</button>
                     </div>
-                    </fieldset>
+                </fieldset>
             </form>
-            <article>
+            <article className="w-100">
                 {post.comments && <Comments comments={post.comments}/>}
             </article>
         </section>

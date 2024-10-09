@@ -10,7 +10,9 @@ const Main = () => {
     }, [navigate])
 
     return(
-        <Posts/>
+        <main className="container">
+            <Posts/>
+        </main>
     )
 }
 

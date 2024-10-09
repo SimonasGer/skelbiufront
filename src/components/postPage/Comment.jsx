@@ -84,11 +84,11 @@ const Comment = (props) => {
         }
     }, [loading2, props._id])
     return(
-        <article>
+        <article className="border overflow-auto m-2"  style={{height: 125, width: "100%", }}>
             <a href={`/user/${comment.creator ? comment.creator._id : ''}`}>
                 {comment.creator ? comment.creator.username : 'Unknown User'}
             </a>
-            <h2>{comment.content}</h2>
+            <h2 style={{fontSize: "20px"}}>{comment.content}</h2>
             {reply && 
                 <form onSubmit={handleSubmit}>
                     <fieldset>
@@ -100,7 +100,7 @@ const Comment = (props) => {
                         </div>
                     </fieldset>
                 </form>}
-            <button onClick={handleReply}>{expand}</button>
+            <button className="btn btn-success" onClick={handleReply}>{expand}</button>
             {replies.map(reply => (
                 <Comment _id={reply}/>
             ))}

@@ -35,25 +35,21 @@ const Form = () => {
           }
     }
     return(
-        <form onSubmit={handleSubmit}>
-            <fieldset>
-                <div>
-                    <input name="title" id="title" type="text" placeholder="Title" value={post.title} onChange={handleChange}/>
-                </div>
-                <div>
-                    <textarea name="description" id="description" placeholder="Description" value={post.description} onChange={handleChange}></textarea>
-                </div>
-                <div>
-                    <input name="price" id="price" type="number" placeholder="Price" value={post.price} onChange={handleChange}/>
-                </div>
-                <div>
-                    <input name="image" id="image" type="text" placeholder="Image Url" value={post.image} onChange={handleChange}/>
-                </div>
-                <div>
-                    <button type="submit">Post</button>
-                </div>
-            </fieldset>
-        </form>
+        <div className="d-flex flex-column align-items-center">
+            <h2 className="my-5 fs-1">Add a post</h2>
+        
+            <form className="my-5 w-100" onSubmit={handleSubmit}>
+                <fieldset className="container d-flex justify-content-center ">
+                    <div className="d-flex flex-column align-items-center w-50">
+                        <input className="w-100 m-3 form-control" name="title" id="title" type="text" placeholder="Title" value={post.title} onChange={handleChange}/>
+                        <textarea className="w-100 m-3 form-control" name="description" id="description" placeholder="Description" value={post.description} onChange={handleChange}></textarea>
+                        <input className="w-100 m-3 form-control" name="price" id="price" type="number" placeholder="Price" value={post.price} onChange={handleChange}/>
+                        <input className="w-100 m-3 form-control" name="image" id="image" type="text" placeholder="Image Url" value={post.image} onChange={handleChange}/>
+                        <button className="w-100 m-3 btn btn-success" type="submit">Post</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
     )
 }
 

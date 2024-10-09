@@ -26,7 +26,7 @@ const Posts = () => {
     }, [loading])
 
     return(
-        <section>
+        <section className="d-flex flex-row flex-wrap">
             {posts.map(post => (
                 <Post title={post.title} description={post.description} price={post.price} image={post.image} _id={post._id}/>
             ))}

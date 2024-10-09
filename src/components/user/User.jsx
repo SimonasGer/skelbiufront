@@ -32,9 +32,9 @@ const User = () => {
         }
     }, [loading, userId])
     return(
-        <section>
-            <h2>{user.username} Postings</h2>
-            <article>
+        <section className="container d-flex flex-column justify-content-center align-items-center ">
+            <h2 className="my-5 fs-1">{user.username} Postings</h2>
+            <article className="d-flex w-100 flex-wrap">
             {posts.map(post => (
                 <Post title={post.title} description={post.description} price={post.price} image={post.image} _id={post._id}/>
             ))}

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 const Header = () => {
     const navigate = useNavigate();
+    const username = localStorage.getItem("username")
     const handleLogout = () => {
         localStorage.removeItem("token")
         navigate("/login")
@@ -12,15 +13,22 @@ const Header = () => {
         navigate("/")
     }
     return(
-        <header>
+        <header className="bg-secondary d-flex justify-content-between">
             <div>
-                {localStorage.getItem("token") && <button onClick={handleLogout}>Log Out</button>}
+                <div className="d-inline m-1">
+                    {localStorage.getItem("token") && <button className="btn btn-secondary fs-1" onClick={handleMain}>Home</button>}
+                </div>
+                <div className="d-inline m-1">
+                    {localStorage.getItem("token") && <button className="btn btn-secondary fs-1" onClick={handlePost}>Add Posting</button>}
+                </div>
             </div>
             <div>
-                {localStorage.getItem("token") && <button onClick={handlePost}>Add Posting</button>}
-            </div>
-            <div>
-                {localStorage.getItem("token") && <button onClick={handleMain}>Home</button>}
+                <div className="d-inline m-1">
+                    {localStorage.getItem("token") && <button className="btn btn-secondary fs-1 disabled" onClick={handleLogout}>{username}</button>}
+                </div>
+                <div className="d-inline m-1">
+                    {localStorage.getItem("token") && <button className="btn btn-secondary fs-1" onClick={handleLogout}>Log Out</button>}
+                </div>
             </div>
             
         </header>
