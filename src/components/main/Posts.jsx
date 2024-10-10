@@ -13,7 +13,6 @@ const Posts = () => {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                       }
                 });
-                console.log(res.data.data.posts)
                 setPosts(res.data.data.posts)
             } catch (err) {
                 console.error(err);

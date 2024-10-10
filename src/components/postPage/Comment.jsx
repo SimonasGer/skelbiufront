@@ -8,6 +8,7 @@ const Comment = (props) => {
     const [comment, setComment] = useState({})
     const [reply, setReply] = useState(false)
     const [expand, setExpand] = useState("Reply")
+
     useEffect(() => {
         const loadComment = async () => {
             try {
@@ -85,7 +86,6 @@ const Comment = (props) => {
             setLoading2(false)
         }
     }, [loading2, props._id])
-
     const handleDelete = async () => {
         try {
             await axios.post(`${url}/comments/delete/${props._id}`, comment, {
@@ -99,12 +99,11 @@ const Comment = (props) => {
             console.error(err);
           }
     }
-
     return(
         <article className={`border p-5`}  style={{ width: "100%", }}>
-            <div onClick={handleDelete} className="float-end">
+            {(comment.creator ? comment.creator.username === localStorage.getItem("username") : false || localStorage.getItem("role") === "admin") && <div onClick={handleDelete} className="float-end">
                 🗑
-            </div>
+            </div>}
             <a href={`/user/${comment.creator ? comment.creator._id : ''}`}>
                 {comment.creator ? comment.creator.username : 'Unknown User'}
             </a>

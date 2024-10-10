@@ -4,8 +4,10 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { jwtDecode } from "jwt-decode"
 import Comments from "./Comments"
+import { useNavigate } from "react-router-dom"
 
 const PostPage = () => {
+    const navigate = useNavigate();
     const postId = useLocation().pathname.split("/")[2]
     const user = jwtDecode(localStorage.getItem("token")).id
     const [loading, setLoading] = useState(true)
@@ -88,10 +90,25 @@ const PostPage = () => {
             console.error(error)
         }
       }
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.delete(`${url}/posts/${postId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                  }
+            })
+        navigate("/")
+          } catch (err) {
+            console.error(err);
+          }
+    }
 
     return(
         <section className="container d-flex flex-column align-items-center w-100">
             <h2 className="fs-1 mt-4">{post.title}</h2>
+            {(post.creator ? post.creator.username === localStorage.getItem("username") : false || localStorage.getItem("role") === "admin") && <button onClick={handleDelete}>Delete</button>}
+            {(post.creator ? post.creator.username === localStorage.getItem("username") : false) && <button onClick={() => {navigate(`/edit/${post._id}`)}}>Edit</button>}
             <div className="mb-5">
                 <p className="d-inline fs-4">Created by:</p>
                 <a className="d-inline fs-4" href={`/user/${post.creator ? post.creator._id : ''}`}>

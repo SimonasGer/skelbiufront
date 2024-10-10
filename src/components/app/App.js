@@ -6,6 +6,7 @@ import Main from "../main/Main";
 import Form from "../form/Form";
 import PostPage from "../postPage/PostPage";
 import User from "../user/User";
+import Edit from "../form/Edit";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/" element={<Main/>}></Route>
           <Route path="/form" element={<Form/>}></Route>
+          <Route path="/edit/:id" element={<Edit/>}></Route>
           <Route path="/posting/:id" element={<PostPage/>}></Route>
           <Route path="/user/:id" element={<User/>}></Route>
         </Routes>
