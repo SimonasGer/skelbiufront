@@ -107,7 +107,7 @@ const PostPage = () => {
     return(
         <section className="container d-flex flex-column align-items-center w-100">
             <h2 className="fs-1 mt-4">{post.title}</h2>
-            {(post.creator ? post.creator.username === localStorage.getItem("username") : false || localStorage.getItem("role") === "admin") && <button onClick={handleDelete}>Delete</button>}
+            {((post.creator ? post.creator.username === localStorage.getItem("username") : false) || (localStorage.getItem("role") === "admin")) && <button onClick={handleDelete}>Delete</button>}
             {(post.creator ? post.creator.username === localStorage.getItem("username") : false) && <button onClick={() => {navigate(`/edit/${post._id}`)}}>Edit</button>}
             <div className="mb-5">
                 <p className="d-inline fs-4">Created by:</p>

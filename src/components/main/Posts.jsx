@@ -2,13 +2,12 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { url } from "../../utilities/backend";
 import Post from "./Post";
-const Posts = () => {
-    const [loading, setLoading] = useState(true)
+const Posts = (props) => {
     const [posts, setPosts] = useState([])
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const res = await axios.get(`${url}/posts`, {
+                const res = await axios.get(`${url}/posts?${props.search}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                       }
@@ -18,11 +17,11 @@ const Posts = () => {
                 console.error(err);
             }
         }
-        if (loading){
+        if (props.loading){
             loadPosts()
-            setLoading(false)
+            props.setLoading(false)
         }
-    }, [loading])
+    }, [props])
 
     return(
         <section className="d-flex flex-row flex-wrap">
