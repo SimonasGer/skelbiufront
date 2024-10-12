@@ -8,6 +8,8 @@ const Comment = (props) => {
     const [comment, setComment] = useState({})
     const [reply, setReply] = useState(false)
     const [expand, setExpand] = useState("Reply")
+    const [likes, setLikes] = useState(0)
+    const [like, setLike] = useState("black")
 
     useEffect(() => {
         const loadComment = async () => {
@@ -18,6 +20,13 @@ const Comment = (props) => {
                       }
                 });
                 setComment(res.data.data.comment)
+                setLikes(res.data.data.comment.likes)
+                for (let i of res.data.data.comment.likes) {
+                    if (jwtDecode(localStorage.getItem("token")).id === i._id){
+                        setLike("green")
+                        break
+                    }
+                }
             } catch (err) {
                 console.error(err);
             }
@@ -26,7 +35,7 @@ const Comment = (props) => {
             loadComment()
             setLoading(false)
         }
-    }, [loading, props._id, comment])
+    }, [loading, props._id, comment, like, likes])
 
     const handleReply = () => {
         if(reply){
@@ -99,11 +108,31 @@ const Comment = (props) => {
             console.error(err);
           }
     }
+
+    const handleLike = async () => {
+        if (like === "black"){
+            setLike("green")
+        } else {
+            setLike("black")
+        }
+        try {
+            await axios.post(`${url}/comments/${props._id}`, {likes: jwtDecode(localStorage.getItem("token")).id}, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                  }
+            });
+            props.loading(true)
+            setLoading(true)
+        } catch (err) {
+            console.error(err);
+        }
+    }
     return(
         <article className={`border p-5`}  style={{ width: "100%", }}>
             {(comment.creator ? comment.creator.username === localStorage.getItem("username") : false || localStorage.getItem("role") === "admin") && <div onClick={handleDelete} className="float-end">
                 🗑
             </div>}
+            <div className="float-end" onClick={handleLike} style={{ color: like, fontSize: "20pt"}}>♥ {likes.length}</div>
             <a href={`/user/${comment.creator ? comment.creator._id : ''}`}>
                 {comment.creator ? comment.creator.username : 'Unknown User'}
             </a>

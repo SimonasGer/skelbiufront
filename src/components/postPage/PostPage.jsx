@@ -27,6 +27,7 @@ const PostPage = () => {
                     setPost(res.data.data.post)
                     setLikes(res.data.data.post.likes.length)
                     let users = res.data.data.post.likes
+                    console.log(res)
                     for (let i of users) {
                         if (user === i._id){
                             setLike("green")
@@ -110,10 +111,11 @@ const PostPage = () => {
             {((post.creator ? post.creator.username === localStorage.getItem("username") : false) || (localStorage.getItem("role") === "admin")) && <button onClick={handleDelete}>Delete</button>}
             {(post.creator ? post.creator.username === localStorage.getItem("username") : false) && <button onClick={() => {navigate(`/edit/${post._id}`)}}>Edit</button>}
             <div className="mb-5">
-                <p className="d-inline fs-4">Created by:</p>
-                <a className="d-inline fs-4" href={`/user/${post.creator ? post.creator._id : ''}`}>
+                <p className="d-inline fs-4 m-1">Created by:</p>
+                <a className="d-inline fs-4 m-1" href={`/user/${post.creator ? post.creator._id : ''}`}>
                     {post.creator ? post.creator.username : 'Unknown User'}
                 </a>
+                <p className="d-inline fs-4 m-1">{post.category ? post.category.category : "None"}</p>
             </div>
             <div className="w-75 text-center">
                 <img className="w-100" src={post.image} alt={post.image}/>
