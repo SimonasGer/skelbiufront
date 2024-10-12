@@ -27,7 +27,7 @@ const Header = () => {
                     {localStorage.getItem("token") && <button className="btn btn-secondary fs-1" onClick={handleMain}>Home</button>}
                 </div>
                 <div className="d-inline m-1">
-                    {localStorage.getItem("token") && <button className="btn btn-secondary fs-1" onClick={handlePost}>Add Posting</button>}
+                    {localStorage.getItem("token") && <button className="btn btn-secondary fs-1" onClick={handlePost}>Add</button>}
                 </div>
             </div>
             <div>

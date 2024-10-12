@@ -7,7 +7,7 @@ const Posts = (props) => {
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const res = await axios.get(`${url}/posts?${props.search}`, {
+                const res = await axios.get(`${url}/posts?${props.search}${props.category}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                       }
