@@ -1,1 +1,1 @@
-export const url = "skelbiuback.vercel.app";
+export const url = "https://skelbiuback.vercel.app";
