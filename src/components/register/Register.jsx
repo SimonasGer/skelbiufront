@@ -26,7 +26,7 @@ const Register = () => {
             localStorage.setItem('token', res.data.data.token);
             localStorage.setItem('username', res.data.data.username )
             localStorage.setItem('role', res.data.data.role )
-            console.log(res.data.data)
+            console.log(res)
             navigate('/');
           } catch (err) {
             console.error(err);
