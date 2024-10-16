@@ -4,10 +4,14 @@ import { url } from "../../utilities/backend";
 import Post from "./Post";
 const Posts = (props) => {
     const [posts, setPosts] = useState([])
+    let _and = ""
+    if (props.search.length > 0 && props.category.length > 0){
+        _and = "&";
+    }
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const res = await axios.get(`${url}/posts?${props.search}${props.category}`, {
+                const res = await axios.get(`${url}/posts?${props.search}${_and}${props.category}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                       }
